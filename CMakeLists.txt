@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Add nlohmann/json library
-include(FetchContent)
-FetchContent_Declare(
-        json
-        URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
-)
-FetchContent_MakeAvailable(json)
+# include(FetchContent)
+# FetchContent_Declare(
+# json
+# URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+# )
+# FetchContent_MakeAvailable(json)
 
 # Set the target architecture.
 # All modern x86/x64 processors support AVX2.
@@ -25,8 +25,8 @@ project(mesh_booleans)
 
 set(TBB_TEST OFF CACHE BOOL " " FORCE)
 set(TBB_EXAMPLES OFF CACHE BOOL " " FORCE)
-add_subdirectory(arrangements/external/oneTBB)
 
+# add_subdirectory(arrangements/external/oneTBB)
 set(cinolib_DIR ${PROJECT_SOURCE_DIR}/arrangements/external/Cinolib)
 set(CINOLIB_USES_OPENGL_GLFW_IMGUI OFF)
 set(CINOLIB_USES_SHEWCHUK_PREDICATES ON)
@@ -43,46 +43,10 @@ target_include_directories(${PROJECT_NAME}_arrangement PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME}_arrangement cinolib)
-target_link_libraries(${PROJECT_NAME}_arrangement tbb)
+target_link_libraries(${PROJECT_NAME}_arrangement TBB::tbb)
 target_link_libraries(${PROJECT_NAME}_arrangement nlohmann_json::nlohmann_json)
-target_compile_definitions(${PROJECT_NAME}_arrangement PUBLIC TBB_PARALLEL=1)
+
+# target_compile_definitions(${PROJECT_NAME}_arrangement PUBLIC TBB_PARALLEL=1)
 target_include_directories(${PROJECT_NAME}_arrangement PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/abseil-cpp/)
-target_include_directories(${PROJECT_NAME}_arrangement PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
 
-# # Compiler-specific options
-# if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-# # grant IEEE 754 compliance
-# target_compile_options(${PROJECT_NAME} PUBLIC "/fp:strict")
-
-# # use intrinsic functions
-# target_compile_options(${PROJECT_NAME} PUBLIC "/Oi")
-
-# # set target architecture
-# if(ENABLE_AVX2)
-# target_compile_options(${PROJECT_NAME} PUBLIC "/arch:AVX2")
-# elseif(ENABLE_SSE2)
-# target_compile_options(${PROJECT_NAME} PUBLIC "/arch:SSE2")
-# endif()
-
-# # reserve enough stack size
-# target_link_options(${PROJECT_NAME} PUBLIC "/STACK:8421376")
-
-# # turn off annoying warnings
-# target_compile_options(${PROJECT_NAME} PUBLIC "/D _CRT_SECURE_NO_WARNINGS")
-# else()
-# # set standard optimization level
-# target_compile_options(${PROJECT_NAME} PUBLIC -O2)
-
-# # reserve enough stack size
-# target_compile_options(${PROJECT_NAME} PUBLIC -Wl,-z,stacksize=8421376)
-
-# # grant IEEE 754 compliance
-# target_compile_options(${PROJECT_NAME} PUBLIC -frounding-math)
-
-# # set target architecture
-# if(ENABLE_AVX2)
-# target_compile_options(${PROJECT_NAME} PUBLIC "-mavx2")
-# elseif(ENABLE_SSE2)
-# target_compile_options(${PROJECT_NAME} PUBLIC "-msse2")
-# endif()
-# endif()
+# target_include_directories(${PROJECT_NAME}_arrangement PUBLIC ${PROJECT_SOURCE_DIR}/arrangements/external/oneTBB/)
