@@ -38,15 +38,16 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#define NBIT 32
+// define it as 1024
+#define NBIT 32000
 
 
-enum Plane {XY, YZ, ZX};
+enum Plane { XY, YZ, ZX };
 
-inline Plane intToPlane(const int &norm)
+inline Plane intToPlane(const int& norm)
 {
-    if(norm == 0) return YZ;
-    if(norm == 1) return ZX;
+    if (norm == 0) return YZ;
+    if (norm == 1) return ZX;
     return XY;
 }
 
