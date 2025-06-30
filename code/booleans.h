@@ -137,7 +137,7 @@ inline void booleanPipeline(
     std::vector<std::bitset<NBIT>>& bool_labels);
 
 
-inline void customArrangementPipeline(
+inline std::vector<uint> customArrangementPipeline(
     const std::vector<double>& in_coords,
     const std::vector<uint>& in_tris,
     const std::vector<uint>& in_labels,

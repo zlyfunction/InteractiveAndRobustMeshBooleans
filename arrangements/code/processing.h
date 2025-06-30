@@ -47,20 +47,31 @@
 #include <cinolib/predicates.h>
 
 
-inline double computeMultiplier(const std::vector<double> &coords);
+inline double computeMultiplier(const std::vector<double>& coords);
 
-inline void mergeDuplicatedVertices(const std::vector<double> &in_coords, const std::vector<uint> &in_tris,
-                                    point_arena& arena, std::vector<genericPoint*> &verts, std::vector<uint> &tris,
-                                    bool parallel);
+inline std::vector<uint> mergeDuplicatedVertices(
+    const std::vector<double>& in_coords,
+    const std::vector<uint>& in_tris,
+    point_arena& arena,
+    std::vector<genericPoint*>& verts,
+    std::vector<uint>& tris,
+    bool parallel);
 
-inline void removeDegenerateAndDuplicatedTriangles(const std::vector<genericPoint *> &verts, const std::vector<std::bitset<NBIT> > &in_labels,
-                                                   std::vector<uint> &tris, std::vector<std::bitset<NBIT> > &labels);
+inline void removeDegenerateAndDuplicatedTriangles(
+    const std::vector<genericPoint*>& verts,
+    const std::vector<std::bitset<NBIT>>& in_labels,
+    std::vector<uint>& tris,
+    std::vector<std::bitset<NBIT>>& labels);
 
-inline void freePointsMemory(std::vector<genericPoint*> &points);
+inline void freePointsMemory(std::vector<genericPoint*>& points);
 
-inline void computeApproximateCoordinates(const std::vector<genericPoint *> &vertices, std::vector<double> &coords);
+inline void computeApproximateCoordinates(
+    const std::vector<genericPoint*>& vertices,
+    std::vector<double>& coords);
 
-inline void computeApproximateCoordinates(const std::vector<genericPoint *> &vertices, std::vector<cinolib::vec3d> &out_vertices);
+inline void computeApproximateCoordinates(
+    const std::vector<genericPoint*>& vertices,
+    std::vector<cinolib::vec3d>& out_vertices);
 
 #include "processing.cpp"
 

@@ -160,7 +160,7 @@ inline void booleanPipeline(
 
 /* a custom arrangement pipeline in witch we can expose the octree used to find the starting
  * intersection list */
-inline void customArrangementPipeline(
+inline std::vector<uint> customArrangementPipeline(
     const std::vector<double>& in_coords,
     const std::vector<uint>& in_tris,
     const std::vector<uint>& in_labels,
@@ -187,8 +187,16 @@ inline void customArrangementPipeline(
     initFPU();
     double multiplier = computeMultiplier(in_coords);
 
-    mergeDuplicatedVertices(in_coords, in_tris, arena, vertices, arr_in_tris, parallel);
-
+    std::vector<uint> vertex_id_map =
+        mergeDuplicatedVertices(in_coords, in_tris, arena, vertices, arr_in_tris, parallel);
+    {
+        std::cout << "vertex_id_map: ";
+        for (uint i = 0; i < vertex_id_map.size(); i++) {
+            std::cout << vertex_id_map[i];
+            if (i < vertex_id_map.size() - 1) std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
     customRemoveDegenerateAndDuplicatedTriangles(
         vertices,
         arr_in_tris,
@@ -209,6 +217,8 @@ inline void customArrangementPipeline(
     ts.appendJollyPoints();
 
     labels.inside.resize(arr_out_tris.size() / 3);
+
+    return vertex_id_map;
 }
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
